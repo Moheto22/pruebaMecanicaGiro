@@ -1,18 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <HorizontalScrollView
-        android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:orientation="horizontal"
+        android:padding="0dp"
+        android:layout_margin="0dp">
+
         <ImageView
-            android:id="@+id/myImageView"
-            android:layout_width="11816px"
-            android:layout_height="match_parent"
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/imagen"
-            android:scaleType="centerInside" />
-    </HorizontalScrollView>
-</LinearLayout>
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/imagen"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"/>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/imagen"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"/>
+
+    </LinearLayout>
+</HorizontalScrollView>
