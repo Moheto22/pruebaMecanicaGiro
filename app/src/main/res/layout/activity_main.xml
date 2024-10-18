@@ -1,4 +1,5 @@
 <HorizontalScrollView
+    android:id="@+id/scroll"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,6 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/cara"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -38,7 +40,7 @@
             android:layout_marginLeft="1000dp"
             android:layout_marginTop="450dp"/>
         <ImageView
-        android:id="@+id/eef"
+        android:id="@+id/imageViewSmall2"
         android:layout_width="200dp"
         android:layout_height="150dp"
         android:src="@drawable/animal"
