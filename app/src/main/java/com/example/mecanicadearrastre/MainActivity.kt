@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity() {
         val linear = findViewById<LinearLayout>(R.id.cara)
         val img1 = findViewById<ImageView>(R.id.imageViewSmall)
         val img2 = findViewById<ImageView>(R.id.imageViewSmall2)
-        val fondo = findViewById<ImageView>(R.id.imageView1)
-
+        val imgSearch = findViewById<ImageView>(R.id.searchImage)
 
         scroller.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -37,11 +36,11 @@ class MainActivity : AppCompatActivity() {
         })
 
         // Configuración de las imágenes
-        var X: Int = Random.nextInt(7800) -3700
+        var X: Int = Random.nextInt(7800) +500
         var Y: Int = Random.nextInt(400) + 200
         (img1.layoutParams as FrameLayout.LayoutParams).leftMargin = X
         (img1.layoutParams as FrameLayout.LayoutParams).topMargin = Y
-        (img2.layoutParams as FrameLayout.LayoutParams).leftMargin = X+fondo.width
+        (img2.layoutParams as FrameLayout.LayoutParams).leftMargin = X+11630
         (img2.layoutParams as FrameLayout.LayoutParams).topMargin = Y
 
         // Listener para detectar el desplazamiento
@@ -54,15 +53,11 @@ class MainActivity : AppCompatActivity() {
                     linear.removeViewAt(0)
                     linear.addView(firstImageView)
                     scroller.scrollTo(X - firstImageView.width, 0)
-                    (img1.layoutParams as FrameLayout.LayoutParams).leftMargin += fondo.width
-                    (img2.layoutParams as FrameLayout.LayoutParams).leftMargin += fondo.width
                 } else if (X <= 3000) {
                     val lastImageView = linear.getChildAt(1)
                     linear.removeViewAt(1)
                     linear.addView(lastImageView)
                     scroller.scrollTo(X + lastImageView.width, 0)
-                    (img1.layoutParams as FrameLayout.LayoutParams).leftMargin -= fondo.width
-                    (img2.layoutParams as FrameLayout.LayoutParams).leftMargin -= fondo.width
                 }
             }
         }
