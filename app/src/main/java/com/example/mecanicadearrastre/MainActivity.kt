@@ -8,8 +8,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -22,26 +20,26 @@ class MainActivity : AppCompatActivity() {
 
         val scroller = findViewById<HorizontalScrollView>(R.id.scroll)
         val linear = findViewById<LinearLayout>(R.id.cara)
-        val img1 = findViewById<ImageView>(R.id.imageViewSmall)
-        val img2 = findViewById<ImageView>(R.id.imageViewSmall2)
+        val vacaImg1 = findViewById<ImageView>(R.id.imageVaca1)
+        val vacaImg2 = findViewById<ImageView>(R.id.imageVaca2)
+        val perroImg1 = findViewById<ImageView>(R.id.imagePerro1)
+        val perroImg2 = findViewById<ImageView>(R.id.imagePerro2)
         val imgSearch = findViewById<ImageView>(R.id.searchImage)
 
         scroller.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 scroller.scrollTo(4000, 0)
                 scroller.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val totalWidth = linear.width
-                println("El ancho total del LinearLayout es: $totalWidth")
             }
         })
-
+        generatePositions(perroImg1,perroImg2,vacaImg2,vacaImg1);
         // Configuración de las imágenes
         var X: Int = Random.nextInt(7800) +500
-        var Y: Int = Random.nextInt(400) + 200
-        (img1.layoutParams as FrameLayout.LayoutParams).leftMargin = X
-        (img1.layoutParams as FrameLayout.LayoutParams).topMargin = Y
-        (img2.layoutParams as FrameLayout.LayoutParams).leftMargin = X+11630
-        (img2.layoutParams as FrameLayout.LayoutParams).topMargin = Y
+        var Y: Int = Random.nextInt(400) + 500
+        (vacaImg1.layoutParams as FrameLayout.LayoutParams).leftMargin = X
+        (vacaImg1.layoutParams as FrameLayout.LayoutParams).topMargin = Y
+        (perroImg1.layoutParams as FrameLayout.LayoutParams).leftMargin = X+11630
+        (perroImg1.layoutParams as FrameLayout.LayoutParams).topMargin = Y
 
         // Listener para detectar el desplazamiento
         scroller.viewTreeObserver.addOnScrollChangedListener {
@@ -61,5 +59,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun generatePositions(
+        perroImg1: ImageView,
+        perroImg2: ImageView,
+        vacaImg2: ImageView,
+        vacaImg1: ImageView
+    ) {
+        var X: Int = Random.nextInt(7800) +500
+        var Y: Int = Random.nextInt(400) + 500
+        (vacaImg1.layoutParams as FrameLayout.LayoutParams).leftMargin = X
+        (vacaImg1.layoutParams as FrameLayout.LayoutParams).topMargin = Y
+        (vacaImg2.layoutParams as FrameLayout.LayoutParams).leftMargin = X+11630
+        (vacaImg2.layoutParams as FrameLayout.LayoutParams).topMargin = Y
+
+        (perroImg1.layoutParams as FrameLayout.LayoutParams).leftMargin = 2000
+        (perroImg1.layoutParams as FrameLayout.LayoutParams).topMargin = Y
+        (perroImg2.layoutParams as FrameLayout.LayoutParams).leftMargin = 2000 + 11630
+        (perroImg2.layoutParams as FrameLayout.LayoutParams).topMargin = Y
+
     }
 }
