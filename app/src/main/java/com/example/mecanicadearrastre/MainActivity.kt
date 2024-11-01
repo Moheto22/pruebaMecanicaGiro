@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         val linear = findViewById<LinearLayout>(R.id.cara)
         val searchImage = findViewById<ImageView>(R.id.searchImage)
         searchImage.setImageResource(siquenceAnimals[0])
+        searchImage.tag = siquenceAnimals[0]
         val listaAnimales = generateListaAnimales();
         scroller.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     private fun applyListener(listaAnimales: MutableList<List<ImageView>>, commonClickListener: View.OnClickListener) {
         for (i in 0 until 8) {
             listaAnimales[i][0].setOnClickListener(commonClickListener)
-            listaAnimales[i][0].setOnClickListener(commonClickListener)
+            listaAnimales[i][1].setOnClickListener(commonClickListener)
         }
     }
 
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkPosition(posicionesOcupadas: MutableList<Int>, position: Int): Boolean {
         for (pos in posicionesOcupadas) {
-            if (pos + 300 > position && pos - 300 < position) {
+            if (pos + 3000 > position && pos - 3000 < position) {
                 // Si encontramos una posición conflictiva, retorna false directamente.
                 return false
             }
