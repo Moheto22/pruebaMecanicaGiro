@@ -7,18 +7,26 @@ import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+    private var job: Job? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        var reloj = findViewById<TextView>(R.id.tiempo)
+
+        var secondsPassed = 0
         setContentView(R.layout.activity_main)
         val siquenceAnimals = generateSequenceAnimals()
+        var points = 0
+        val marcador = findViewById<TextView>(R.id.marcador)
         val scroller = findViewById<HorizontalScrollView>(R.id.scroll)
         val linear = findViewById<LinearLayout>(R.id.cara)
         val searchImage = findViewById<ImageView>(R.id.searchImage)
@@ -36,7 +44,11 @@ class MainActivity : AppCompatActivity() {
             val imageView = view as ImageView
             if(imageView.drawable.constantState == searchImage.drawable.constantState){
                 siquenceAnimals.removeAt(0)
-                if (!siquenceAnimals.isEmpty()){
+                points ++
+                marcador.setText("${points}/8")
+                listaAnimales[imageView.tag as Int][0].visibility = View.GONE
+                listaAnimales[imageView.tag as Int][1].visibility = View.GONE
+                if (siquenceAnimals.isNotEmpty()){
                     searchImage.setImageResource(siquenceAnimals[0])
                 }else{
                     finish()
@@ -44,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         applyListener(listaAnimales,commonClickListener)
+
         scroller.viewTreeObserver.addOnScrollChangedListener {
             val X = scroller.scrollX
             val maxLength = linear.width - 3000
@@ -61,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        startTimer(secondsPassed,reloj)
     }
 
     private fun generateSequenceAnimals(): MutableList<Int> {
@@ -73,6 +87,22 @@ class MainActivity : AppCompatActivity() {
         for (i in 0 until 8) {
             listaAnimales[i][0].setOnClickListener(commonClickListener)
             listaAnimales[i][1].setOnClickListener(commonClickListener)
+        }
+    }
+    private fun startTimer(secondsPassed: Int, reloj: TextView) {
+        var seconds = secondsPassed // Empieza desde el valor inicial dado o desde 0 si no lo quieres inicializar.
+
+        // Cancela cualquier temporizador anterior para evitar múltiples ejecuciones.
+        job?.cancel()
+
+        // Crea un nuevo trabajo para contar el tiempo.
+        job = CoroutineScope(Dispatchers.Main).launch {
+            while (isActive) {
+                delay(1000) // Espera un segundo.
+                seconds++
+                val timeFormatted = convertSecondsToMinutesAndSeconds(seconds)
+                reloj.text = "Tiempo: $timeFormatted"
+            }
         }
     }
 
@@ -110,7 +140,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun generateListaAnimales(): MutableList<List<ImageView>> {
-        return listOf(
+        var list =  listOf(
             listOf(findViewById(R.id.imageVaca1), findViewById(R.id.imageVaca2)),
             listOf(findViewById(R.id.imagePerro1), findViewById(R.id.imagePerro2)),
             listOf(findViewById(R.id.imageGallina1), findViewById(R.id.imageGallina2)),
@@ -120,6 +150,16 @@ class MainActivity : AppCompatActivity() {
             listOf(findViewById(R.id.imagePato1),findViewById(R.id.imagePato2)),
             listOf(findViewById(R.id.imageOveja1),findViewById<ImageView>(R.id.imageOveja2))
         ).toMutableList()
+        for (i in 0 until 8) {
+            list[i][0].tag=i
+            list[i][1].tag=i
+        }
+        return list
+    }
+    fun convertSecondsToMinutesAndSeconds(seconds: Int): String {
+        val minutes = seconds / 60
+        val remainingSeconds = seconds % 60
+        return "$minutes:${String.format("%02d", remainingSeconds)}"
     }
 
 }

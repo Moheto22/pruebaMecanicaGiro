@@ -181,6 +181,36 @@
         android:layout_margin="45dp"
         >
     </ImageView>
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="120dp"
+        android:background="@drawable/animal_frame_design"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="200dp"
+        >
+    </ImageView>
+    <TextView
+        android:id="@+id/marcador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "0/8"
+        android:textSize="50dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginLeft="230dp"
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/tiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "0:00"
+        android:textSize="50dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginLeft="570dp"
+        >
+    </TextView>
+
+
 
 </FrameLayout>
 
