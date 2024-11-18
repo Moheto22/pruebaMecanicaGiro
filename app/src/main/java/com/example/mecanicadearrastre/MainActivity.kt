@@ -1,9 +1,9 @@
 package com.example.mecanicadearrastre
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
@@ -19,18 +19,15 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
-    private var job: Job? = null
     private var timeRunnable: Runnable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        var reloj = findViewById<TextView>(R.id.tiempo)
-        var startTime = System.currentTimeMillis()  // Hora de inicio
 
         var handler = Handler(Looper.getMainLooper())
-        var secondsPassed = 0
         setContentView(R.layout.activity_main)
         val siquenceAnimals = generateSequenceAnimals()
+        var startTime = System.currentTimeMillis()
         var points = 0
         val marcador = findViewById<TextView>(R.id.marcador)
         val scroller = findViewById<HorizontalScrollView>(R.id.scroll)
@@ -39,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         searchImage.setImageResource(siquenceAnimals[0])
         searchImage.tag = siquenceAnimals[0]
         val listaAnimales = generateListaAnimales();
+        val liastaSounds = generateListaSounds(listaAnimales);
         scroller.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 scroller.scrollTo(4000, 0)
@@ -60,24 +58,11 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
             }else{
-                val error = findViewById<ImageView>(R.id.error)
-
-
-                val location = IntArray(2)
-                view.getLocationOnScreen(location)
-
-                val failedX = location[0].toFloat()
-                val failedY = location[1].toFloat()
-
-                error.translationX = failedX
-                error.translationY = failedY
-
-                lifecycleScope.launch {
-                    delay(400)
-                    error.translationY = 2000.toFloat()
-                }
+                var mediaError = MediaPlayer.create(this,R.raw.error_sound)
+                mediaError.setVolume(0.2f,0.2f)
+                mediaError.start()
             }
-        }
+            }
         applyListener(listaAnimales,commonClickListener)
 
         scroller.viewTreeObserver.addOnScrollChangedListener {
@@ -98,6 +83,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
         startTimer(startTime,handler)
+    }
+
+    private fun generateListaSounds(listaAnimales: MutableList<List<ImageView>>): Any {
+        val map = mapOf(R.drawable.pato to R.raw.pato_sonido, R.drawable.vaca to R.raw.vaca_sonido,
+            R.drawable.conejo to R.raw.rabbit,R.drawable.cerdo to R.raw.cerdo_sonido,R.drawable.oveja to R.raw.oveja,R.drawable.caballo to  R.raw.caballo_sonido,
+            R.drawable.gallina to R.raw.gallina_sonido, R.drawable.perro to R.raw.perro_sonido)
+        val list = mutableListOf<MediaPlayer>()
+        for (i in 0..7) {
+            list.add(map[listaAnimales[i][0].drawable.constantState])
+        }
     }
 
     private fun generateSequenceAnimals(): MutableList<Int> {
@@ -187,10 +182,6 @@ class MainActivity : AppCompatActivity() {
         }
         return list
     }
-    fun convertSecondsToMinutesAndSeconds(seconds: Int): String {
-        val minutes = seconds / 60
-        val remainingSeconds = seconds % 60
-        return "$minutes:${String.format("%02d", remainingSeconds)}"
-    }
+
 
 }

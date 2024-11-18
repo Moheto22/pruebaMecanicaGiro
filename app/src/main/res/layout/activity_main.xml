@@ -227,19 +227,6 @@
         android:src = "@drawable/watch"
         >
     </ImageView>
-    <ImageView
-        android:id="@+id/error"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="2000dp"
-        android:layout_marginLeft="230dp"
-        android:src = "@drawable/error"
-        android:elevation="10dp"
-        >
-    </ImageView>
-
-
-
 </FrameLayout>
 
 
