@@ -206,17 +206,17 @@
         android:text = "0/8"
         android:textSize="50dp"
         android:layout_marginTop="55dp"
-        android:layout_marginLeft="330dp"
+        android:layout_marginLeft="320dp"
         >
     </TextView>
     <TextView
         android:id="@+id/tiempo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "0:00"
+        android:text = "00:00"
         android:textSize="50dp"
         android:layout_marginTop="55dp"
-        android:layout_marginLeft="570dp"
+        android:layout_marginLeft="550dp"
         >
     </TextView>
     <ImageView
@@ -231,7 +231,7 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="53dp"
-        android:layout_marginLeft="480dp"
+        android:layout_marginLeft="460dp"
         android:src = "@drawable/watch"
         >
     </ImageView>

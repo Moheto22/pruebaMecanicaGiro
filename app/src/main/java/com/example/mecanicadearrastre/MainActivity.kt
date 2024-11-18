@@ -1,6 +1,8 @@
 package com.example.mecanicadearrastre
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
@@ -17,11 +19,14 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private var job: Job? = null
+    private var timeRunnable: Runnable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         var reloj = findViewById<TextView>(R.id.tiempo)
+        var startTime = System.currentTimeMillis()  // Hora de inicio
 
+        var handler = Handler(Looper.getMainLooper())
         var secondsPassed = 0
         setContentView(R.layout.activity_main)
         val siquenceAnimals = generateSequenceAnimals()
@@ -91,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        ///startTimer(secondsPassed,reloj)
+        startTimer(startTime,handler)
     }
 
     private fun generateSequenceAnimals(): MutableList<Int> {
@@ -106,21 +111,29 @@ class MainActivity : AppCompatActivity() {
             listaAnimales[i][1].setOnClickListener(commonClickListener)
         }
     }
-    private fun startTimer(secondsPassed: Int, reloj: TextView) {
-        var seconds = secondsPassed // Empieza desde el valor inicial dado o desde 0 si no lo quieres inicializar.
+    private fun startTimer(startTime: Long, handler: Handler) {
+        // Runnable que se ejecuta cada segundo
+        timeRunnable = object : Runnable {
+            override fun run() {
+                // Obtener el tiempo transcurrido
+                val elapsedMillis = System.currentTimeMillis() - startTime
+                val seconds = (elapsedMillis / 1000) % 60
+                val minutes = (elapsedMillis / 1000) / 60
 
-        // Cancela cualquier temporizador anterior para evitar múltiples ejecuciones.
-        job?.cancel()
+                // Formatear el tiempo en "MM:SS"
+                val timeString = String.format("%02d:%02d", minutes, seconds)
 
-        // Crea un nuevo trabajo para contar el tiempo.
-        job = CoroutineScope(Dispatchers.Main).launch {
-            while (isActive) {
-                delay(1000) // Espera un segundo.
-                seconds++
-                val timeFormatted = convertSecondsToMinutesAndSeconds(seconds)
-                reloj.text = "Tiempo: $timeFormatted"
+                // Actualizar el TextView con el tiempo
+                val timerTextView = findViewById<TextView>(R.id.tiempo)
+                timerTextView.text = timeString
+
+                // Reprogramar el siguiente "tick"
+                handler.postDelayed(this, 1000)
             }
         }
+
+        // Iniciar el timer
+        handler.post(timeRunnable!!)
     }
 
     private fun generatePositions(listaAnimales: MutableList<List<ImageView>>) {
