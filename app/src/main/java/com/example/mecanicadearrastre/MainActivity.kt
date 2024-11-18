@@ -3,6 +3,7 @@ package com.example.mecanicadearrastre
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
@@ -61,19 +62,19 @@ class MainActivity : AppCompatActivity() {
             }else{
                 val error = findViewById<ImageView>(R.id.error)
 
+
                 val location = IntArray(2)
                 view.getLocationOnScreen(location)
+
                 val failedX = location[0].toFloat()
                 val failedY = location[1].toFloat()
 
-                // Posicionar la imagen de error
                 error.translationX = failedX
                 error.translationY = failedY
-                error.visibility = View.VISIBLE
 
                 lifecycleScope.launch {
                     delay(400)
-                    error.visibility = View.GONE
+                    error.translationY = 2000.toFloat()
                 }
             }
         }

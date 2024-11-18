@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:fillViewport="true">
         <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -163,16 +164,7 @@
                 android:src="@drawable/pato"
                 android:tag="@drawable/pato"
                 />
-            <ImageView
-                android:id="@+id/error"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="200dp"
-                android:layout_marginLeft="230dp"
-                android:src = "@drawable/error"
-                android:visibility="gone"
-                >
-            </ImageView>
+
         </FrameLayout>
     </HorizontalScrollView>
     <ImageView
@@ -235,7 +227,16 @@
         android:src = "@drawable/watch"
         >
     </ImageView>
-
+    <ImageView
+        android:id="@+id/error"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="2000dp"
+        android:layout_marginLeft="230dp"
+        android:src = "@drawable/error"
+        android:elevation="10dp"
+        >
+    </ImageView>
 
 
 
