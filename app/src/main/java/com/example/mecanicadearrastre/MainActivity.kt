@@ -1,9 +1,11 @@
 package com.example.mecanicadearrastre
 
+import android.content.res.Resources
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
@@ -33,25 +35,25 @@ class MainActivity : AppCompatActivity() {
         val scroller = findViewById<HorizontalScrollView>(R.id.scroll)
         val linear = findViewById<LinearLayout>(R.id.cara)
         val searchImage = findViewById<ImageView>(R.id.searchImage)
-        searchImage.setImageResource(siquenceAnimals[0])
-        searchImage.tag = siquenceAnimals[0]
-        val listaAnimales = generateListaAnimales();
-        val liastaSounds = generateListaSounds(listaAnimales);
+        searchImage.setImageResource(siquenceAnimals[0].imageResId)
+        searchImage.tag = siquenceAnimals[0].imageResId
+        val listaImageView = generateListImageView(siquenceAnimals)
         scroller.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 scroller.scrollTo(4000, 0)
                 scroller.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
         })
-        generatePositions(listaAnimales)
+        val animalsList = generateListaAnimales()
+        generatePositions(listaImageView)
         val commonClickListener = View.OnClickListener { view ->
             val imageView = view as ImageView
             if(imageView.drawable.constantState == searchImage.drawable.constantState){
                 siquenceAnimals.removeAt(0)
                 points ++
                 marcador.setText("${points}/8")
-                listaAnimales[imageView.tag as Int][0].visibility = View.GONE
-                listaAnimales[imageView.tag as Int][1].visibility = View.GONE
+                listaImageView[imageView.tag as Int][0].visibility = View.GONE
+                listaImageView[imageView.tag as Int][1].visibility = View.GONE
                 if (siquenceAnimals.isNotEmpty()){
                     searchImage.setImageResource(siquenceAnimals[0])
                 }else{
@@ -63,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 mediaError.start()
             }
             }
-        applyListener(listaAnimales,commonClickListener)
+        applyListener(listaImageView,commonClickListener)
 
         scroller.viewTreeObserver.addOnScrollChangedListener {
             val X = scroller.scrollX
@@ -85,7 +87,11 @@ class MainActivity : AppCompatActivity() {
         startTimer(startTime,handler)
     }
 
-    private fun generateListaSounds(listaAnimales: MutableList<List<ImageView>>): Any {
+    private fun generateListaAnimales(): List<Animals> {
+
+    }
+
+    /**private fun generateListaSounds(listaAnimales: MutableList<List<ImageView>>): Any {
         val map = mapOf(R.drawable.pato to R.raw.pato_sonido, R.drawable.vaca to R.raw.vaca_sonido,
             R.drawable.conejo to R.raw.rabbit,R.drawable.cerdo to R.raw.cerdo_sonido,R.drawable.oveja to R.raw.oveja,R.drawable.caballo to  R.raw.caballo_sonido,
             R.drawable.gallina to R.raw.gallina_sonido, R.drawable.perro to R.raw.perro_sonido)
@@ -93,12 +99,17 @@ class MainActivity : AppCompatActivity() {
         for (i in 0..7) {
             list.add(map[listaAnimales[i][0].drawable.constantState])
         }
-    }
+    }**/
 
-    private fun generateSequenceAnimals(): MutableList<Int> {
-        val listMod = listOf(R.drawable.pato,R.drawable.vaca,R.drawable.conejo,R.drawable.caballo,R.drawable.cerdo,R.drawable.gallina,R.drawable.oveja,R.drawable.perro)
-        val list : MutableList<Int> = listMod.shuffled().toMutableList()
-        return list
+    private fun generateSequenceAnimals(): List<Animals> {
+        return listOf(Animals("vaca",R.drawable.vaca,R.raw.vaca_sonido),
+            Animals("pato",R.drawable.pato,R.raw.pato_sonido),
+            Animals("perro",R.drawable.perro,R.raw.perro_sonido),
+            Animals("caballo",R.drawable.caballo,R.raw.caballo_sonido),
+            Animals("oveja",R.drawable.oveja,R.raw.oveja),
+            Animals("cerdo",R.drawable.cerdo,R.raw.cerdo_sonido),
+            Animals("conejo",R.drawable.conejo,R.raw.conejo)).shuffled()
+
     }
 
     private fun applyListener(listaAnimales: MutableList<List<ImageView>>, commonClickListener: View.OnClickListener) {
@@ -143,12 +154,12 @@ class MainActivity : AppCompatActivity() {
             val index = listaIndexAnimales[Random.nextInt(listaIndexAnimales.size)]
             listaIndexAnimales.remove(index)
             do {
-                positionX = Random.nextInt(10300)+500
+                positionX = Random.nextInt(20000)+500
             }while (checkPosition(posicionesOcupadas,positionX))
 
             (listaAnimales[index][0].layoutParams as FrameLayout.LayoutParams).leftMargin = positionX
             (listaAnimales[index][0].layoutParams as FrameLayout.LayoutParams).topMargin = positionY
-            (listaAnimales[index][1].layoutParams as FrameLayout.LayoutParams).leftMargin = positionX+11630
+            (listaAnimales[index][1].layoutParams as FrameLayout.LayoutParams).leftMargin = positionX+21750
             (listaAnimales[index][1].layoutParams as FrameLayout.LayoutParams).topMargin = positionY
         }
     }
@@ -165,22 +176,38 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun generateListaAnimales(): MutableList<List<ImageView>> {
+    private fun generateListImageView(siquenceAnimals: List<Animals>): MutableList<List<ImageView>> {
         var list =  listOf(
-            listOf(findViewById(R.id.imageVaca1), findViewById(R.id.imageVaca2)),
-            listOf(findViewById(R.id.imagePerro1), findViewById(R.id.imagePerro2)),
-            listOf(findViewById(R.id.imageGallina1), findViewById(R.id.imageGallina2)),
-            listOf(findViewById(R.id.imageCaballo1),findViewById(R.id.imageCaballo2)),
-            listOf(findViewById(R.id.imageCerdo1),findViewById(R.id.imageCerdo2)),
-            listOf(findViewById(R.id.imageConejo1),findViewById(R.id.imageConejo2)),
-            listOf(findViewById(R.id.imagePato1),findViewById(R.id.imagePato2)),
-            listOf(findViewById(R.id.imageOveja1),findViewById<ImageView>(R.id.imageOveja2))
+            listOf(findViewById(R.id.image1_1), findViewById(R.id.image1_2)),
+            listOf(findViewById(R.id.image2_1), findViewById(R.id.image2_2)),
+            listOf(findViewById(R.id.image3_1), findViewById(R.id.image3_2)),
+            listOf(findViewById(R.id.image4_1),findViewById(R.id.image4_2)),
+            listOf(findViewById(R.id.image5_1),findViewById(R.id.image5_2)),
+            listOf(findViewById(R.id.image6_1),findViewById(R.id.image6_2)),
+            listOf(findViewById(R.id.image7_1),findViewById(R.id.image7_2)),
+            listOf(findViewById(R.id.image8_1),findViewById<ImageView>(R.id.image8_2))
         ).toMutableList()
         for (i in 0 until 8) {
-            list[i][0].tag=i
-            list[i][1].tag=i
+            list[i][0].setImageResource(siquenceAnimals[i].imageResId)
+            list[i][1].setImageResource(siquenceAnimals[i].imageResId)
         }
         return list
+    }
+    fun ImageView.setSizeInDp(widthDp: Int, heightDp: Int) {
+        // Convertir dp a píxeles
+        val widthPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, widthDp.toFloat(), Resources.getSystem().displayMetrics
+        ).toInt()
+
+        val heightPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, heightDp.toFloat(), Resources.getSystem().displayMetrics
+        ).toInt()
+
+        // Cambiar las dimensiones del ImageView
+        val params = this.layoutParams
+        params.width = widthPx
+        params.height = heightPx
+        this.layoutParams = params
     }
 
 

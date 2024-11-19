@@ -38,7 +38,7 @@
                     android:adjustViewBounds="true"/>
             </LinearLayout>
             <ImageView
-                android:id="@+id/imageVaca1"
+                android:id="@+id/image1_1"
                 android:layout_width="200dp"
                 android:layout_height="150dp"
                 android:src="@drawable/vaca"
@@ -46,7 +46,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageVaca2"
+                android:id="@+id/image1_2"
                 android:layout_width="200dp"
                 android:layout_height="150dp"
                 android:src="@drawable/vaca"
@@ -54,7 +54,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imagePerro1"
+                android:id="@+id/image2_1"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
                 android:src="@drawable/perro"
@@ -62,7 +62,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imagePerro2"
+                android:id="@+id/image2_2"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
                 android:src="@drawable/perro"
@@ -70,7 +70,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageGallina1"
+                android:id="@+id/image3_1"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/gallina"
@@ -78,7 +78,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageGallina2"
+                android:id="@+id/image3_2"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/gallina"
@@ -86,7 +86,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageCaballo1"
+                android:id="@+id/image4_1"
                 android:layout_width="180dp"
                 android:layout_height="300dp"
                 android:src="@drawable/caballo"
@@ -94,7 +94,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageCaballo2"
+                android:id="@+id/image4_2"
                 android:layout_width="180dp"
                 android:layout_height="300dp"
                 android:src="@drawable/caballo"
@@ -102,7 +102,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageCerdo1"
+                android:id="@+id/image5_1"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
                 android:src="@drawable/cerdo"
@@ -110,7 +110,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageCerdo2"
+                android:id="@+id/image5_2"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
                 android:src="@drawable/cerdo"
@@ -118,7 +118,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageConejo1"
+                android:id="@+id/image6_1"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/conejo"
@@ -126,7 +126,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageConejo2"
+                android:id="@+id/image6_2"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/conejo"
@@ -134,7 +134,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageOveja1"
+                android:id="@+id/image7_1"
                 android:layout_width="200dp"
                 android:layout_height="170dp"
                 android:src="@drawable/oveja"
@@ -142,7 +142,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imageOveja2"
+                android:id="@+id/image7_2"
                 android:layout_width="200dp"
                 android:layout_height="170dp"
                 android:src="@drawable/oveja"
@@ -150,7 +150,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imagePato1"
+                android:id="@+id/image8_1"
                 android:layout_width="200dp"
                 android:layout_height="170dp"
                 android:src="@drawable/pato"
@@ -158,7 +158,7 @@
 
                 />
             <ImageView
-                android:id="@+id/imagePato2"
+                android:id="@+id/image8_2"
                 android:layout_width="200dp"
                 android:layout_height="170dp"
                 android:src="@drawable/pato"
