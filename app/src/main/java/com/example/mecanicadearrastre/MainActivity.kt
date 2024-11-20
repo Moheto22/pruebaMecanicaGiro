@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         var handler = Handler(Looper.getMainLooper())
         setContentView(R.layout.activity_main)
         val siquenceAnimals = generateSequenceAnimals()
@@ -44,18 +43,20 @@ class MainActivity : AppCompatActivity() {
                 scroller.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
         })
-        val animalsList = generateListaAnimales()
         generatePositions(listaImageView)
         val commonClickListener = View.OnClickListener { view ->
             val imageView = view as ImageView
             if(imageView.drawable.constantState == searchImage.drawable.constantState){
+                val mediaAnimal = MediaPlayer.create(this,siquenceAnimals[0].sound)
+                mediaAnimal.setVolume(0.2f,0.2f)
+                mediaAnimal.start()
                 siquenceAnimals.removeAt(0)
                 points ++
                 marcador.setText("${points}/8")
                 listaImageView[imageView.tag as Int][0].visibility = View.GONE
                 listaImageView[imageView.tag as Int][1].visibility = View.GONE
                 if (siquenceAnimals.isNotEmpty()){
-                    searchImage.setImageResource(siquenceAnimals[0])
+                    searchImage.setImageResource(siquenceAnimals[0].imageResId)
                 }else{
                     finish()
                 }
@@ -87,28 +88,15 @@ class MainActivity : AppCompatActivity() {
         startTimer(startTime,handler)
     }
 
-    private fun generateListaAnimales(): List<Animals> {
-
-    }
-
-    /**private fun generateListaSounds(listaAnimales: MutableList<List<ImageView>>): Any {
-        val map = mapOf(R.drawable.pato to R.raw.pato_sonido, R.drawable.vaca to R.raw.vaca_sonido,
-            R.drawable.conejo to R.raw.rabbit,R.drawable.cerdo to R.raw.cerdo_sonido,R.drawable.oveja to R.raw.oveja,R.drawable.caballo to  R.raw.caballo_sonido,
-            R.drawable.gallina to R.raw.gallina_sonido, R.drawable.perro to R.raw.perro_sonido)
-        val list = mutableListOf<MediaPlayer>()
-        for (i in 0..7) {
-            list.add(map[listaAnimales[i][0].drawable.constantState])
-        }
-    }**/
-
-    private fun generateSequenceAnimals(): List<Animals> {
-        return listOf(Animals("vaca",R.drawable.vaca,R.raw.vaca_sonido),
-            Animals("pato",R.drawable.pato,R.raw.pato_sonido),
-            Animals("perro",R.drawable.perro,R.raw.perro_sonido),
-            Animals("caballo",R.drawable.caballo,R.raw.caballo_sonido),
-            Animals("oveja",R.drawable.oveja,R.raw.oveja),
-            Animals("cerdo",R.drawable.cerdo,R.raw.cerdo_sonido),
-            Animals("conejo",R.drawable.conejo,R.raw.conejo)).shuffled()
+    private fun generateSequenceAnimals(): MutableList<Animals> {
+        return listOf(Animals("vaca",R.drawable.vaca,R.raw.vaca_sonido,200,150),
+            Animals("pato",R.drawable.pato,R.raw.pato_sonido,100,100),
+            Animals("perro",R.drawable.perro,R.raw.perro_sonido,150,100),
+            Animals("caballo",R.drawable.caballo,R.raw.caballo_sonido,200,300),
+            Animals("oveja",R.drawable.oveja,R.raw.oveja,200,150),
+            Animals("cerdo",R.drawable.cerdo,R.raw.cerdo_sonido,200,150),
+            Animals("conejo",R.drawable.conejo,R.raw.conejo,100,100),
+            Animals("gallina",R.drawable.gallina,R.raw.gallina_sonido,100,100)).shuffled().toMutableList()
 
     }
 
@@ -144,7 +132,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun generatePositions(listaAnimales: MutableList<List<ImageView>>) {
-
         var posicionesOcupadas: MutableList<Int> = mutableListOf()
         var positionX : Int
         var positionY : Int
@@ -189,7 +176,11 @@ class MainActivity : AppCompatActivity() {
         ).toMutableList()
         for (i in 0 until 8) {
             list[i][0].setImageResource(siquenceAnimals[i].imageResId)
+            list[i][0].setSizeInDp(siquenceAnimals[i].width,siquenceAnimals[i].height)
+            list[i][0].tag = i
             list[i][1].setImageResource(siquenceAnimals[i].imageResId)
+            list[i][1].setSizeInDp(siquenceAnimals[i].width,siquenceAnimals[i].height)
+            list[i][1].tag = i
         }
         return list
     }
