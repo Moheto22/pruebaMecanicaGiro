@@ -21,6 +21,10 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+    object constantsDataUser{
+        const val INDEX = "INDEX"
+        const val LISTPLAYERS = "LISTPLAYERS"
+    }
     private var timeRunnable: Runnable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +62,12 @@ class MainActivity : AppCompatActivity() {
                 if (siquenceAnimals.isNotEmpty()){
                     searchImage.setImageResource(siquenceAnimals[0].imageResId)
                 }else{
-                    finish()
+                    val background = findViewById<View>(R.id.finishBackground)
+                    val frame = findViewById<ImageView>(R.id.finalFrame)
+                    val image = findViewById<ImageView>(R.id.imageCongratulation)
+                    background.visibility = View.VISIBLE
+                    frame.visibility = View.VISIBLE
+                    image.visibility = View.VISIBLE
                 }
             }else{
                 var mediaError = MediaPlayer.create(this,R.raw.error_sound)
@@ -176,10 +185,18 @@ class MainActivity : AppCompatActivity() {
         ).toMutableList()
         for (i in 0 until 8) {
             list[i][0].setImageResource(siquenceAnimals[i].imageResId)
-            list[i][0].setSizeInDp(siquenceAnimals[i].width,siquenceAnimals[i].height)
+            siquenceAnimals[i].width?.let { siquenceAnimals[i].height?.let { it1 ->
+                list[i][0].setSizeInDp(it,
+                    it1
+                )
+            } }
             list[i][0].tag = i
             list[i][1].setImageResource(siquenceAnimals[i].imageResId)
-            list[i][1].setSizeInDp(siquenceAnimals[i].width,siquenceAnimals[i].height)
+            siquenceAnimals[i].width?.let { siquenceAnimals[i].height?.let { it1 ->
+                list[i][1].setSizeInDp(it,
+                    it1
+                )
+            } }
             list[i][1].tag = i
         }
         return list

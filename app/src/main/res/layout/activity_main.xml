@@ -180,6 +180,32 @@
         android:src = "@drawable/watch"
         >
     </ImageView>
+    <View
+        android:id="@+id/finishBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/darken"
+        android:visibility="gone">
+    </View>
+    <ImageView
+        android:id="@+id/finalFrame"
+        android:layout_width="600dp"
+        android:layout_height="300dp"
+        android:background="@drawable/animal_frame_design"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="60dp"
+        android:visibility="gone"
+        >
+    </ImageView>
+    <ImageView
+        android:id="@+id/imageCongratulation"
+        android:layout_width="500dp"
+        android:layout_height="275dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="105dp"
+        android:background="@drawable/imagen_final_partida_facil"
+        android:visibility="gone">
+    </ImageView>
 </FrameLayout>
 
 
