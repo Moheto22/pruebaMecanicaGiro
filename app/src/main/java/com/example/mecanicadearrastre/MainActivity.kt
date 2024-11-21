@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             Animals("pato",R.drawable.pato,R.raw.pato_sonido,100,100),
             Animals("perro",R.drawable.perro,R.raw.perro_sonido,150,100),
             Animals("caballo",R.drawable.caballo,R.raw.caballo_sonido,200,300),
-            Animals("oveja",R.drawable.oveja,R.raw.oveja,200,150),
+            Animals("oveja",R.drawable.oveja,R.raw.oveja,150,150),
             Animals("cerdo",R.drawable.cerdo,R.raw.cerdo_sonido,200,150),
             Animals("conejo",R.drawable.conejo,R.raw.conejo,100,100),
             Animals("gallina",R.drawable.gallina,R.raw.gallina_sonido,100,100)).shuffled().toMutableList()
@@ -146,11 +146,11 @@ class MainActivity : AppCompatActivity() {
         var positionY : Int
         var listaIndexAnimales = MutableList(8) {it}
         for (i in 0 until 8) {
-            positionY = Random.nextInt(600)+450
+            positionY = Random.nextInt(500)+450
             val index = listaIndexAnimales[Random.nextInt(listaIndexAnimales.size)]
             listaIndexAnimales.remove(index)
             do {
-                positionX = Random.nextInt(20000)+500
+                positionX = Random.nextInt(19500)+1000
             }while (checkPosition(posicionesOcupadas,positionX))
 
             (listaAnimales[index][0].layoutParams as FrameLayout.LayoutParams).leftMargin = positionX
