@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MecanicaDeArrastre"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".EasyGame"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>

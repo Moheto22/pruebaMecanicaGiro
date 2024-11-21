@@ -2,6 +2,7 @@ package com.example.mecanicadearrastre
 
 import android.content.res.Resources
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,23 +15,33 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.random.Random
 
-class MainActivity : AppCompatActivity() {
+class EasyGame : AppCompatActivity() {
     object constantsDataUser{
         const val INDEX = "INDEX"
         const val LISTPLAYERS = "LISTPLAYERS"
     }
+    private var  seconds = 0
     private var timeRunnable: Runnable? = null
+    private var handler = Handler(Looper.getMainLooper())
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val date = LocalDateTime.now()
+        val format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
+        val finalDate = date.format(format)
         enableEdgeToEdge()
+        var errors = 0
         var handler = Handler(Looper.getMainLooper())
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_easy_game)
         val siquenceAnimals = generateSequenceAnimals()
         var startTime = System.currentTimeMillis()
         var points = 0
@@ -51,9 +62,9 @@ class MainActivity : AppCompatActivity() {
         val commonClickListener = View.OnClickListener { view ->
             val imageView = view as ImageView
             if(imageView.drawable.constantState == searchImage.drawable.constantState){
-                val mediaAnimal = MediaPlayer.create(this,siquenceAnimals[0].sound)
-                mediaAnimal.setVolume(0.2f,0.2f)
-                mediaAnimal.start()
+                val mediaAnimal = siquenceAnimals[0].sound?.let { MediaPlayer.create(this, it) }
+                mediaAnimal?.setVolume(0.2f,0.2f)
+                mediaAnimal?.start()
                 siquenceAnimals.removeAt(0)
                 points ++
                 marcador.setText("${points}/8")
@@ -62,6 +73,9 @@ class MainActivity : AppCompatActivity() {
                 if (siquenceAnimals.isNotEmpty()){
                     searchImage.setImageResource(siquenceAnimals[0].imageResId)
                 }else{
+
+                    val timeString = findViewById<TextView>(R.id.tiempo)
+                    val seconds = stringToSeconds(timeString.text.toString())
                     val background = findViewById<View>(R.id.finishBackground)
                     val frame = findViewById<ImageView>(R.id.finalFrame)
                     val image = findViewById<ImageView>(R.id.imageCongratulation)
@@ -70,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                     image.visibility = View.VISIBLE
                 }
             }else{
+                errors ++
                 var mediaError = MediaPlayer.create(this,R.raw.error_sound)
                 mediaError.setVolume(0.2f,0.2f)
                 mediaError.start()
@@ -95,6 +110,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         startTimer(startTime,handler)
+    }
+
+    private fun stringToSeconds(timeString: String): Int {
+        val minuts = timeString.substring(0,2).toInt()
+        val seconds = timeString.substring(timeString.length-2).toInt()
+        return (minuts * 60)+seconds
     }
 
     private fun generateSequenceAnimals(): MutableList<Animals> {
@@ -130,7 +151,6 @@ class MainActivity : AppCompatActivity() {
                 // Actualizar el TextView con el tiempo
                 val timerTextView = findViewById<TextView>(R.id.tiempo)
                 timerTextView.text = timeString
-
                 // Reprogramar el siguiente "tick"
                 handler.postDelayed(this, 1000)
             }
@@ -217,6 +237,10 @@ class MainActivity : AppCompatActivity() {
         params.height = heightPx
         this.layoutParams = params
     }
+    private fun stopTimer() {
+        timeRunnable?.let { handler.removeCallbacks(it) }
+    }
+
 
 
 }
