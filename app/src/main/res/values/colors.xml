@@ -4,5 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#F2C307</color>
     <color name="darken">#80000000</color>
-
+    <array name="gradient_colors">
+        <item>#FF0000</item>
+        <item>#FFA500</item>
+        <item>#FFFF00</item>
+        <item>#008000</item>
+        <item>#0000FF</item>
+    </array>
 </resources>

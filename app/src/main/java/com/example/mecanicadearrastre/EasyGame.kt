@@ -73,7 +73,7 @@ class EasyGame : AppCompatActivity() {
                 if (siquenceAnimals.isNotEmpty()){
                     searchImage.setImageResource(siquenceAnimals[0].imageResId)
                 }else{
-
+                    stopTimer()
                     val timeString = findViewById<TextView>(R.id.tiempo)
                     val seconds = stringToSeconds(timeString.text.toString())
                     val background = findViewById<View>(R.id.finishBackground)
@@ -85,7 +85,7 @@ class EasyGame : AppCompatActivity() {
                 }
             }else{
                 errors ++
-                var mediaError = MediaPlayer.create(this,R.raw.error_sound)
+                var mediaError = MediaPlayer.create(this,R.raw.error)
                 mediaError.setVolume(0.2f,0.2f)
                 mediaError.start()
             }
@@ -118,15 +118,15 @@ class EasyGame : AppCompatActivity() {
         return (minuts * 60)+seconds
     }
 
-    private fun generateSequenceAnimals(): MutableList<Animals> {
-        return listOf(Animals("vaca",R.drawable.vaca,R.raw.vaca_sonido,200,150),
-            Animals("pato",R.drawable.pato,R.raw.pato_sonido,100,100),
-            Animals("perro",R.drawable.perro,R.raw.perro_sonido,150,100),
-            Animals("caballo",R.drawable.caballo,R.raw.caballo_sonido,200,300),
-            Animals("oveja",R.drawable.oveja,R.raw.oveja,150,150),
-            Animals("cerdo",R.drawable.cerdo,R.raw.cerdo_sonido,200,150),
-            Animals("conejo",R.drawable.conejo,R.raw.conejo,100,100),
-            Animals("gallina",R.drawable.gallina,R.raw.gallina_sonido,100,100)).shuffled().toMutableList()
+    private fun generateSequenceAnimals(): MutableList<AnimalsEasy> {
+        return listOf(AnimalsEasy(R.drawable.vaca,R.raw.vaca_sonido,200,150),
+            AnimalsEasy(R.drawable.pato,R.raw.pato_sonido,100,100),
+            AnimalsEasy(R.drawable.perro,R.raw.perro_sonido,150,100),
+            AnimalsEasy(R.drawable.caballo,R.raw.caballo_sonido,200,300),
+            AnimalsEasy(R.drawable.oveja,R.raw.oveja,150,150),
+            AnimalsEasy(R.drawable.cerdo,R.raw.cerdo_sonido,200,150),
+            AnimalsEasy(R.drawable.conejo,R.raw.conejo,100,100),
+            AnimalsEasy(R.drawable.gallina,R.raw.gallina_sonido,100,100)).shuffled().toMutableList()
 
     }
 
@@ -192,7 +192,7 @@ class EasyGame : AppCompatActivity() {
         return true
     }
 
-    private fun generateListImageView(siquenceAnimals: List<Animals>): MutableList<List<ImageView>> {
+    private fun generateListImageView(siquenceAnimals: List<AnimalsEasy>): MutableList<List<ImageView>> {
         var list =  listOf(
             listOf(findViewById(R.id.image1_1), findViewById(R.id.image1_2)),
             listOf(findViewById(R.id.image2_1), findViewById(R.id.image2_2)),
@@ -205,18 +205,10 @@ class EasyGame : AppCompatActivity() {
         ).toMutableList()
         for (i in 0 until 8) {
             list[i][0].setImageResource(siquenceAnimals[i].imageResId)
-            siquenceAnimals[i].width?.let { siquenceAnimals[i].height?.let { it1 ->
-                list[i][0].setSizeInDp(it,
-                    it1
-                )
-            } }
+            list[i][0].setSizeInDp(siquenceAnimals[i].width,siquenceAnimals[i].height)
             list[i][0].tag = i
             list[i][1].setImageResource(siquenceAnimals[i].imageResId)
-            siquenceAnimals[i].width?.let { siquenceAnimals[i].height?.let { it1 ->
-                list[i][1].setSizeInDp(it,
-                    it1
-                )
-            } }
+            list[i][1].setSizeInDp(siquenceAnimals[i].width,siquenceAnimals[i].height)
             list[i][1].tag = i
         }
         return list
