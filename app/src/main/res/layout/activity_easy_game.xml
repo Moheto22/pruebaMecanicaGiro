@@ -1,8 +1,8 @@
 <FrameLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <HorizontalScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
@@ -185,14 +185,14 @@
         android:id="@+id/finishBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/darken"
+        android:background="#AE000000"
         android:visibility="gone">
     </View>
     <ImageView
         android:id="@+id/finalFrame"
         android:layout_width="1170dp"
         android:layout_height="685dp"
-        android:background="@drawable/animal_frame_design"
+        android:background="@drawable/animal_frame_design_final"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="60dp"
         android:visibility="gone"
@@ -200,13 +200,80 @@
     </ImageView>
     <ImageView
         android:id="@+id/imageCongratulation"
-        android:layout_width="1070dp"
-        android:layout_height="665dp"
+        android:layout_width="470dp"
+        android:layout_height="465dp"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="105dp"
+        android:layout_marginLeft="405dp"
         android:background="@drawable/imagen_final_partida_facil"
         android:visibility="gone">
     </ImageView>
+    <TextView
+        android:id="@+id/time_watch_final"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:text = "00:00"
+        android:layout_marginTop="430dp"
+        android:layout_marginLeft="360dp"
+        android:visibility="gone">
+    </TextView>
+    <ImageView
+        android:id="@+id/watch_final"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/watch"
+        android:layout_marginTop="410dp"
+        android:layout_marginLeft="240dp"
+        android:visibility="gone"
+        >
+    </ImageView>
+    <TextView
+        android:id="@+id/num_error_final"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:text = "0"
+        android:layout_marginTop="430dp"
+        android:layout_marginLeft="930dp"
+        android:visibility="gone">
+    </TextView>
+    <ImageView
+        android:id="@+id/error_final"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:src="@drawable/error"
+        android:layout_marginTop="420dp"
+        android:layout_marginLeft="800dp"
+        android:visibility="gone"
+        >
+    </ImageView>
+    <Button
+        android:id="@+id/button_repetir_final"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="520dp"
+        android:layout_marginLeft="220dp"
+        android:text="Repetir"
+        android:background="@drawable/buton_replay_style"
+        android:textSize="50dp"
+        app:backgroundTint="@null"
+        android:visibility="gone"
+        >
+    </Button>
+    <Button
+        android:id="@+id/button_salir_final"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="520dp"
+        android:layout_marginLeft="720dp"
+        android:text="Salir"
+        android:textSize="50dp"
+        android:background="@drawable/buton_salir_style"
+        app:backgroundTint="@null"
+        android:visibility="gone"
+        >
+    </Button>
+
 </FrameLayout>
 
 

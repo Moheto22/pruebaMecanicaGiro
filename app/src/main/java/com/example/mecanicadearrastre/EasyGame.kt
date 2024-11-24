@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
@@ -36,8 +37,6 @@ class EasyGame : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val date = LocalDateTime.now()
-        val format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
-        val finalDate = date.format(format)
         enableEdgeToEdge()
         var errors = 0
         var handler = Handler(Looper.getMainLooper())
@@ -79,9 +78,24 @@ class EasyGame : AppCompatActivity() {
                     val background = findViewById<View>(R.id.finishBackground)
                     val frame = findViewById<ImageView>(R.id.finalFrame)
                     val image = findViewById<ImageView>(R.id.imageCongratulation)
+                    val timeRecord = findViewById<TextView>(R.id.time_watch_final)
+                    timeRecord.text = timeString.text.toString()
+                    val watchImg = findViewById<ImageView>(R.id.watch_final)
+                    val errorsRecord = findViewById<TextView>(R.id.num_error_final)
+                    errorsRecord.text = errors.toString()
+                    val errorImg = findViewById<ImageView>(R.id.error_final)
+                    val buttonReplay = findViewById<Button>(R.id.button_repetir_final)
+                    val buttonSalir = findViewById<Button>(R.id.button_salir_final)
                     background.visibility = View.VISIBLE
                     frame.visibility = View.VISIBLE
                     image.visibility = View.VISIBLE
+                    timeRecord.visibility = View.VISIBLE
+                    watchImg.visibility = View.VISIBLE
+                    errorsRecord.visibility = View.VISIBLE
+                    errorImg.visibility = View.VISIBLE
+                    buttonReplay.visibility = View.VISIBLE
+                    buttonSalir.visibility = View.VISIBLE
+
                 }
             }else{
                 errors ++
