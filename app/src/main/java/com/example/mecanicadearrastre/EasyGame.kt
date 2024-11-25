@@ -30,6 +30,7 @@ class EasyGame : AppCompatActivity() {
         const val INDEX = "INDEX"
         const val LISTPLAYERS = "LISTPLAYERS"
     }
+
     private var  seconds = 0
     private var timeRunnable: Runnable? = null
     private var handler = Handler(Looper.getMainLooper())
@@ -38,6 +39,13 @@ class EasyGame : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val date = LocalDateTime.now()
         enableEdgeToEdge()
+        val mediaBandasonora = MediaPlayer.create(this@EasyGame, R.raw.bandasonora)
+        mediaBandasonora.isLooping = true  // Reproducir música en bucle
+        mediaBandasonora.start()
+        mediaBandasonora.setVolume(
+            0.3f,
+            0.3f
+        )
         var errors = 0
         var handler = Handler(Looper.getMainLooper())
         setContentView(R.layout.activity_easy_game)
@@ -61,9 +69,9 @@ class EasyGame : AppCompatActivity() {
         val commonClickListener = View.OnClickListener { view ->
             val imageView = view as ImageView
             if(imageView.drawable.constantState == searchImage.drawable.constantState){
-                val mediaAnimal = siquenceAnimals[0].sound?.let { MediaPlayer.create(this, it) }
-                mediaAnimal?.setVolume(0.2f,0.2f)
-                mediaAnimal?.start()
+                val mediaAnimal = siquenceAnimals[0].sound.let { MediaPlayer.create(this, it) }
+                mediaAnimal.setVolume(0.3f,0.3f)
+                mediaAnimal.start()
                 siquenceAnimals.removeAt(0)
                 points ++
                 marcador.setText("${points}/8")
